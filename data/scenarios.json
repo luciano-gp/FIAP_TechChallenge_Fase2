@@ -1,0 +1,66 @@
+{
+  "base": {},
+  "alta_prioridade": {
+    "delivery_priority_replacements": {
+      "normal": "high",
+      "low": "high"
+    }
+  },
+  "alta_demanda": {
+    "delivery_demand_multiplier": 1.25
+  },
+  "baixa_autonomia": {
+    "vehicle_overrides": {
+      "autonomy": 1300
+    }
+  },
+  "frota_reduzida": {
+    "vehicle_count": 2,
+    "vehicle_overrides": {
+      "capacity": 50,
+      "autonomy": 2500
+    },
+    "delivery_priority_by_id": {
+      "D07": "high",
+      "D15": "high"
+    }
+  },
+  "maior": {
+    "vehicle_overrides": {
+      "capacity": 50,
+      "autonomy": 3000
+    },
+    "extra_deliveries": [
+      {"id": "D21", "x": 703, "y": 332, "demand": 3, "priority": "high"},
+      {"id": "D22", "x": 786, "y": 59, "demand": 4, "priority": "normal"},
+      {"id": "D23", "x": 129, "y": 166, "demand": 5, "priority": "normal"},
+      {"id": "D24", "x": 212, "y": 223, "demand": 2, "priority": "normal"},
+      {"id": "D25", "x": 295, "y": 280, "demand": 3, "priority": "normal"},
+      {"id": "D26", "x": 378, "y": 337, "demand": 4, "priority": "normal"},
+      {"id": "D27", "x": 461, "y": 64, "demand": 5, "priority": "high"},
+      {"id": "D28", "x": 544, "y": 121, "demand": 2, "priority": "normal"},
+      {"id": "D29", "x": 627, "y": 178, "demand": 3, "priority": "normal"},
+      {"id": "D30", "x": 710, "y": 235, "demand": 4, "priority": "normal"},
+      {"id": "D31", "x": 793, "y": 292, "demand": 5, "priority": "normal"},
+      {"id": "D32", "x": 156, "y": 349, "demand": 2, "priority": "normal"},
+      {"id": "D33", "x": 239, "y": 76, "demand": 3, "priority": "high"},
+      {"id": "D34", "x": 322, "y": 133, "demand": 4, "priority": "normal"},
+      {"id": "D35", "x": 405, "y": 190, "demand": 5, "priority": "normal"},
+      {"id": "D36", "x": 488, "y": 247, "demand": 2, "priority": "normal"},
+      {"id": "D37", "x": 571, "y": 304, "demand": 3, "priority": "normal"},
+      {"id": "D38", "x": 654, "y": 361, "demand": 4, "priority": "high"},
+      {"id": "D39", "x": 737, "y": 88, "demand": 5, "priority": "normal"},
+      {"id": "D40", "x": 80, "y": 145, "demand": 2, "priority": "normal"}
+    ]
+  },
+  "capacidade_insuficiente": {
+    "vehicle_overrides": {
+      "capacity": 20
+    }
+  },
+  "autonomia_insuficiente": {
+    "vehicle_overrides": {
+      "autonomy": 500
+    }
+  }
+}

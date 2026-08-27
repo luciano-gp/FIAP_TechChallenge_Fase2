@@ -1,0 +1,789 @@
+{
+  "report": {
+    "schema_version": "1.0",
+    "purpose": [
+      "gerar instrucoes operacionais de entrega",
+      "analisar eficiencia da rota",
+      "sugerir melhorias logisticas"
+    ],
+    "data_quality": {
+      "all_deliveries_described": true,
+      "no_duplicate_deliveries": true
+    }
+  },
+  "scenario": "base",
+  "context": {
+    "problem": "roteamento de entregas hospitalares",
+    "objective": "minimizar distância e penalizações operacionais",
+    "depot": {
+      "x": 400,
+      "y": 200
+    },
+    "vehicle_count": 3,
+    "delivery_count": 20
+  },
+  "objective": {
+    "fitness": 15202.461700902037,
+    "total_distance": 3902.4617009020362,
+    "penalty": 11300.0,
+    "valid": true
+  },
+  "deliveries": {
+    "total": 20,
+    "by_priority": {
+      "critical": 3,
+      "high": 6,
+      "normal": 10,
+      "low": 1
+    },
+    "details": [
+      {
+        "id": "D01",
+        "priority": "critical",
+        "demand": 3,
+        "location": {
+          "x": 80,
+          "y": 70
+        }
+      },
+      {
+        "id": "D02",
+        "priority": "high",
+        "demand": 5,
+        "location": {
+          "x": 145,
+          "y": 310
+        }
+      },
+      {
+        "id": "D03",
+        "priority": "normal",
+        "demand": 2,
+        "location": {
+          "x": 220,
+          "y": 95
+        }
+      },
+      {
+        "id": "D04",
+        "priority": "normal",
+        "demand": 4,
+        "location": {
+          "x": 285,
+          "y": 345
+        }
+      },
+      {
+        "id": "D05",
+        "priority": "high",
+        "demand": 6,
+        "location": {
+          "x": 360,
+          "y": 55
+        }
+      },
+      {
+        "id": "D06",
+        "priority": "normal",
+        "demand": 2,
+        "location": {
+          "x": 455,
+          "y": 85
+        }
+      },
+      {
+        "id": "D07",
+        "priority": "critical",
+        "demand": 7,
+        "location": {
+          "x": 535,
+          "y": 320
+        }
+      },
+      {
+        "id": "D08",
+        "priority": "normal",
+        "demand": 3,
+        "location": {
+          "x": 615,
+          "y": 125
+        }
+      },
+      {
+        "id": "D09",
+        "priority": "high",
+        "demand": 4,
+        "location": {
+          "x": 700,
+          "y": 275
+        }
+      },
+      {
+        "id": "D10",
+        "priority": "low",
+        "demand": 2,
+        "location": {
+          "x": 755,
+          "y": 65
+        }
+      },
+      {
+        "id": "D11",
+        "priority": "normal",
+        "demand": 5,
+        "location": {
+          "x": 95,
+          "y": 210
+        }
+      },
+      {
+        "id": "D12",
+        "priority": "high",
+        "demand": 3,
+        "location": {
+          "x": 175,
+          "y": 155
+        }
+      },
+      {
+        "id": "D13",
+        "priority": "normal",
+        "demand": 4,
+        "location": {
+          "x": 250,
+          "y": 245
+        }
+      },
+      {
+        "id": "D14",
+        "priority": "normal",
+        "demand": 2,
+        "location": {
+          "x": 330,
+          "y": 290
+        }
+      },
+      {
+        "id": "D15",
+        "priority": "critical",
+        "demand": 6,
+        "location": {
+          "x": 425,
+          "y": 330
+        }
+      },
+      {
+        "id": "D16",
+        "priority": "normal",
+        "demand": 3,
+        "location": {
+          "x": 500,
+          "y": 180
+        }
+      },
+      {
+        "id": "D17",
+        "priority": "high",
+        "demand": 5,
+        "location": {
+          "x": 575,
+          "y": 235
+        }
+      },
+      {
+        "id": "D18",
+        "priority": "normal",
+        "demand": 2,
+        "location": {
+          "x": 650,
+          "y": 360
+        }
+      },
+      {
+        "id": "D19",
+        "priority": "normal",
+        "demand": 4,
+        "location": {
+          "x": 720,
+          "y": 175
+        }
+      },
+      {
+        "id": "D20",
+        "priority": "high",
+        "demand": 3,
+        "location": {
+          "x": 770,
+          "y": 335
+        }
+      }
+    ],
+    "positions_by_priority": {
+      "critical": [
+        {
+          "id": "D01",
+          "vehicle_id": "V01",
+          "position": 1
+        },
+        {
+          "id": "D07",
+          "vehicle_id": "V02",
+          "position": 1
+        },
+        {
+          "id": "D15",
+          "vehicle_id": "V03",
+          "position": 1
+        }
+      ],
+      "high": [
+        {
+          "id": "D02",
+          "vehicle_id": "V01",
+          "position": 2
+        },
+        {
+          "id": "D12",
+          "vehicle_id": "V01",
+          "position": 3
+        },
+        {
+          "id": "D17",
+          "vehicle_id": "V02",
+          "position": 2
+        },
+        {
+          "id": "D05",
+          "vehicle_id": "V02",
+          "position": 3
+        },
+        {
+          "id": "D09",
+          "vehicle_id": "V03",
+          "position": 2
+        },
+        {
+          "id": "D20",
+          "vehicle_id": "V03",
+          "position": 3
+        }
+      ],
+      "normal": [
+        {
+          "id": "D11",
+          "vehicle_id": "V01",
+          "position": 4
+        },
+        {
+          "id": "D13",
+          "vehicle_id": "V01",
+          "position": 5
+        },
+        {
+          "id": "D14",
+          "vehicle_id": "V01",
+          "position": 6
+        },
+        {
+          "id": "D04",
+          "vehicle_id": "V01",
+          "position": 7
+        },
+        {
+          "id": "D03",
+          "vehicle_id": "V02",
+          "position": 4
+        },
+        {
+          "id": "D16",
+          "vehicle_id": "V02",
+          "position": 5
+        },
+        {
+          "id": "D06",
+          "vehicle_id": "V02",
+          "position": 6
+        },
+        {
+          "id": "D18",
+          "vehicle_id": "V03",
+          "position": 4
+        },
+        {
+          "id": "D19",
+          "vehicle_id": "V03",
+          "position": 5
+        },
+        {
+          "id": "D08",
+          "vehicle_id": "V03",
+          "position": 7
+        }
+      ],
+      "low": [
+        {
+          "id": "D10",
+          "vehicle_id": "V03",
+          "position": 6
+        }
+      ]
+    },
+    "critical_deliveries": 3,
+    "critical_deliveries_first": 3,
+    "served_by_priority": {
+      "critical": 3,
+      "high": 6,
+      "normal": 10,
+      "low": 1
+    },
+    "critical_service_rate": 1.0,
+    "missing_ids": [],
+    "duplicate_ids": []
+  },
+  "vehicles": [
+    {
+      "id": "V01",
+      "route": [
+        "D01",
+        "D02",
+        "D12",
+        "D11",
+        "D13",
+        "D14",
+        "D04"
+      ],
+      "route_details": [
+        {
+          "position": 1,
+          "id": "D01",
+          "priority": "critical",
+          "demand": 3,
+          "location": {
+            "x": 80,
+            "y": 70
+          },
+          "cumulative_distance": 345.39832078341084
+        },
+        {
+          "position": 2,
+          "id": "D02",
+          "priority": "high",
+          "demand": 5,
+          "location": {
+            "x": 145,
+            "y": 310
+          },
+          "cumulative_distance": 594.0446559665379
+        },
+        {
+          "position": 3,
+          "id": "D12",
+          "priority": "high",
+          "demand": 3,
+          "location": {
+            "x": 175,
+            "y": 155
+          },
+          "cumulative_distance": 751.9211900050074
+        },
+        {
+          "position": 4,
+          "id": "D11",
+          "priority": "normal",
+          "demand": 5,
+          "location": {
+            "x": 95,
+            "y": 210
+          },
+          "cumulative_distance": 849.0036291997453
+        },
+        {
+          "position": 5,
+          "id": "D13",
+          "priority": "normal",
+          "demand": 4,
+          "location": {
+            "x": 250,
+            "y": 245
+          },
+          "cumulative_distance": 1007.9061150204524
+        },
+        {
+          "position": 6,
+          "id": "D14",
+          "priority": "normal",
+          "demand": 2,
+          "location": {
+            "x": 330,
+            "y": 290
+          },
+          "cumulative_distance": 1099.6939137738814
+        },
+        {
+          "position": 7,
+          "id": "D04",
+          "priority": "normal",
+          "demand": 4,
+          "location": {
+            "x": 285,
+            "y": 345
+          },
+          "cumulative_distance": 1170.7572657916407
+        }
+      ],
+      "route_legs": [
+        {
+          "from": "depot",
+          "to": "D01",
+          "distance": 345.39832078341084
+        },
+        {
+          "from": "D01",
+          "to": "D02",
+          "distance": 248.64633518312712
+        },
+        {
+          "from": "D02",
+          "to": "D12",
+          "distance": 157.87653403846946
+        },
+        {
+          "from": "D12",
+          "to": "D11",
+          "distance": 97.082439194738
+        },
+        {
+          "from": "D11",
+          "to": "D13",
+          "distance": 158.90248582070703
+        },
+        {
+          "from": "D13",
+          "to": "D14",
+          "distance": 91.7877987534291
+        },
+        {
+          "from": "D14",
+          "to": "D04",
+          "distance": 71.06335201775948
+        },
+        {
+          "from": "D04",
+          "to": "depot",
+          "distance": 185.0675552332175
+        }
+      ],
+      "stops": 7,
+      "distance": 1355.8248210248582,
+      "load": 26,
+      "capacity": 32,
+      "capacity_utilization": 0.8125,
+      "capacity_excess": 0.0,
+      "autonomy": 1800,
+      "autonomy_utilization": 0.7532360116804768,
+      "autonomy_excess": 0.0,
+      "priority_penalty": 41.0,
+      "critical_priority_violations": 0,
+      "valid": true
+    },
+    {
+      "id": "V02",
+      "route": [
+        "D07",
+        "D17",
+        "D05",
+        "D03",
+        "D16",
+        "D06"
+      ],
+      "route_details": [
+        {
+          "position": 1,
+          "id": "D07",
+          "priority": "critical",
+          "demand": 7,
+          "location": {
+            "x": 535,
+            "y": 320
+          },
+          "cumulative_distance": 180.62391868188442
+        },
+        {
+          "position": 2,
+          "id": "D17",
+          "priority": "high",
+          "demand": 5,
+          "location": {
+            "x": 575,
+            "y": 235
+          },
+          "cumulative_distance": 274.5653898221641
+        },
+        {
+          "position": 3,
+          "id": "D05",
+          "priority": "high",
+          "demand": 6,
+          "location": {
+            "x": 360,
+            "y": 55
+          },
+          "cumulative_distance": 554.9668876783632
+        },
+        {
+          "position": 4,
+          "id": "D03",
+          "priority": "normal",
+          "demand": 2,
+          "location": {
+            "x": 220,
+            "y": 95
+          },
+          "cumulative_distance": 700.5690854639736
+        },
+        {
+          "position": 5,
+          "id": "D16",
+          "priority": "normal",
+          "demand": 3,
+          "location": {
+            "x": 500,
+            "y": 180
+          },
+          "cumulative_distance": 993.1865832319642
+        },
+        {
+          "position": 6,
+          "id": "D06",
+          "priority": "normal",
+          "demand": 2,
+          "location": {
+            "x": 455,
+            "y": 85
+          },
+          "cumulative_distance": 1098.3055634401073
+        }
+      ],
+      "route_legs": [
+        {
+          "from": "depot",
+          "to": "D07",
+          "distance": 180.62391868188442
+        },
+        {
+          "from": "D07",
+          "to": "D17",
+          "distance": 93.94147114027967
+        },
+        {
+          "from": "D17",
+          "to": "D05",
+          "distance": 280.40149785619906
+        },
+        {
+          "from": "D05",
+          "to": "D03",
+          "distance": 145.60219778561037
+        },
+        {
+          "from": "D03",
+          "to": "D16",
+          "distance": 292.6174977679906
+        },
+        {
+          "from": "D16",
+          "to": "D06",
+          "distance": 105.11898020814318
+        },
+        {
+          "from": "D06",
+          "to": "depot",
+          "distance": 127.47548783981962
+        }
+      ],
+      "stops": 6,
+      "distance": 1225.781051279927,
+      "load": 25,
+      "capacity": 32,
+      "capacity_utilization": 0.78125,
+      "capacity_excess": 0.0,
+      "autonomy": 1800,
+      "autonomy_utilization": 0.6809894729332927,
+      "autonomy_excess": 0.0,
+      "priority_penalty": 34.0,
+      "critical_priority_violations": 0,
+      "valid": true
+    },
+    {
+      "id": "V03",
+      "route": [
+        "D15",
+        "D09",
+        "D20",
+        "D18",
+        "D19",
+        "D10",
+        "D08"
+      ],
+      "route_details": [
+        {
+          "position": 1,
+          "id": "D15",
+          "priority": "critical",
+          "demand": 6,
+          "location": {
+            "x": 425,
+            "y": 330
+          },
+          "cumulative_distance": 132.38202294873727
+        },
+        {
+          "position": 2,
+          "id": "D09",
+          "priority": "high",
+          "demand": 4,
+          "location": {
+            "x": 700,
+            "y": 275
+          },
+          "cumulative_distance": 412.8280961963404
+        },
+        {
+          "position": 3,
+          "id": "D20",
+          "priority": "high",
+          "demand": 3,
+          "location": {
+            "x": 770,
+            "y": 335
+          },
+          "cumulative_distance": 505.0235407692693
+        },
+        {
+          "position": 4,
+          "id": "D18",
+          "priority": "normal",
+          "demand": 2,
+          "location": {
+            "x": 650,
+            "y": 360
+          },
+          "cumulative_distance": 627.6000474905819
+        },
+        {
+          "position": 5,
+          "id": "D19",
+          "priority": "normal",
+          "demand": 4,
+          "location": {
+            "x": 720,
+            "y": 175
+          },
+          "cumulative_distance": 825.4004519391067
+        },
+        {
+          "position": 6,
+          "id": "D10",
+          "priority": "low",
+          "demand": 2,
+          "location": {
+            "x": 755,
+            "y": 65
+          },
+          "cumulative_distance": 940.8344157452586
+        },
+        {
+          "position": 7,
+          "id": "D08",
+          "priority": "normal",
+          "demand": 3,
+          "location": {
+            "x": 615,
+            "y": 125
+          },
+          "cumulative_distance": 1093.1498778625369
+        }
+      ],
+      "route_legs": [
+        {
+          "from": "depot",
+          "to": "D15",
+          "distance": 132.38202294873727
+        },
+        {
+          "from": "D15",
+          "to": "D09",
+          "distance": 280.4460732476032
+        },
+        {
+          "from": "D09",
+          "to": "D20",
+          "distance": 92.19544457292886
+        },
+        {
+          "from": "D20",
+          "to": "D18",
+          "distance": 122.57650672131263
+        },
+        {
+          "from": "D18",
+          "to": "D19",
+          "distance": 197.8004044485248
+        },
+        {
+          "from": "D19",
+          "to": "D10",
+          "distance": 115.43396380615195
+        },
+        {
+          "from": "D10",
+          "to": "D08",
+          "distance": 152.31546211727817
+        },
+        {
+          "from": "D08",
+          "to": "depot",
+          "distance": 227.705950734714
+        }
+      ],
+      "stops": 7,
+      "distance": 1320.8558285972508,
+      "load": 24,
+      "capacity": 32,
+      "capacity_utilization": 0.75,
+      "capacity_excess": 0.0,
+      "autonomy": 1800,
+      "autonomy_utilization": 0.7338087936651393,
+      "autonomy_excess": 0.0,
+      "priority_penalty": 38.0,
+      "critical_priority_violations": 0,
+      "valid": true
+    }
+  ],
+  "constraints": {
+    "scenario_feasible": true,
+    "scenario_issues": [],
+    "total_demand": 75,
+    "total_fleet_capacity": 96,
+    "total_autonomy": 5400,
+    "valid_vehicles": 3,
+    "vehicle_validity_rate": 1.0,
+    "total_load": 75,
+    "average_capacity_utilization": 0.78125,
+    "average_autonomy_utilization": 0.7226780927596362
+  },
+  "analysis": {
+    "status": "valid",
+    "recommendations": [
+      "Solução atende as restrições configuradas"
+    ],
+    "operational_summary": "Todas as entregas foram distribuídas em rotas válidas"
+  },
+  "evolution": {
+    "generations": 93,
+    "initial_fitness": 17575.26998930804,
+    "final_fitness": 15202.461700902037,
+    "improvement": 2372.8082884060022,
+    "improvement_rate": 0.13500835491286942
+  }
+}

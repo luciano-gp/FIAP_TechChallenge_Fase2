@@ -1,13 +1,14 @@
 import pygame
 from pygame.locals import *
+import argparse
 import random
 import itertools
-from genetic_algorithm import mutate, order_crossover, generate_random_population, calculate_fitness, sort_population, default_problems
-from draw_functions import draw_paths, draw_plot, draw_cities
+from tsp_base.genetic_algorithm import mutate, order_crossover, generate_random_population, calculate_fitness, sort_population, default_problems
+from tsp_base.draw_functions import draw_paths, draw_plot, draw_cities
 import sys
 import numpy as np
 import pygame
-from benchmark_att48 import *
+from tsp_base.benchmark_att48 import *
 
 
 # Define constant values
@@ -20,7 +21,15 @@ PLOT_X_OFFSET = 450
 # GA
 N_CITIES = 15
 POPULATION_SIZE = 100
-N_GENERATIONS = None
+parser = argparse.ArgumentParser(description="Executa o TSP original")
+parser.add_argument(
+    "--generations",
+    type=int,
+    default=None,
+    help="Limite de geracoes; sem valor, executa ate Q",
+)
+arguments = parser.parse_args()
+N_GENERATIONS = arguments.generations
 MUTATION_PROBABILITY = 0.5
 
 # Define colors
@@ -129,6 +138,15 @@ while running:
 
     pygame.display.flip()
     clock.tick(FPS)
+
+    if N_GENERATIONS is not None and generation >= N_GENERATIONS:
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    running = False
+            clock.tick(FPS)
 
 
 # TODO: save the best individual in a file if it is better than the one saved.

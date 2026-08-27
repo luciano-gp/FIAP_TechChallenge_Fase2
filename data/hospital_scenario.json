@@ -1,0 +1,33 @@
+{
+  "depot": {
+    "x": 400,
+    "y": 200
+  },
+  "deliveries": [
+    {"id": "D01", "x": 80, "y": 70, "demand": 3, "priority": "critical"},
+    {"id": "D02", "x": 145, "y": 310, "demand": 5, "priority": "high"},
+    {"id": "D03", "x": 220, "y": 95, "demand": 2, "priority": "normal"},
+    {"id": "D04", "x": 285, "y": 345, "demand": 4, "priority": "normal"},
+    {"id": "D05", "x": 360, "y": 55, "demand": 6, "priority": "high"},
+    {"id": "D06", "x": 455, "y": 85, "demand": 2, "priority": "normal"},
+    {"id": "D07", "x": 535, "y": 320, "demand": 7, "priority": "critical"},
+    {"id": "D08", "x": 615, "y": 125, "demand": 3, "priority": "normal"},
+    {"id": "D09", "x": 700, "y": 275, "demand": 4, "priority": "high"},
+    {"id": "D10", "x": 755, "y": 65, "demand": 2, "priority": "low"},
+    {"id": "D11", "x": 95, "y": 210, "demand": 5, "priority": "normal"},
+    {"id": "D12", "x": 175, "y": 155, "demand": 3, "priority": "high"},
+    {"id": "D13", "x": 250, "y": 245, "demand": 4, "priority": "normal"},
+    {"id": "D14", "x": 330, "y": 290, "demand": 2, "priority": "normal"},
+    {"id": "D15", "x": 425, "y": 330, "demand": 6, "priority": "critical"},
+    {"id": "D16", "x": 500, "y": 180, "demand": 3, "priority": "normal"},
+    {"id": "D17", "x": 575, "y": 235, "demand": 5, "priority": "high"},
+    {"id": "D18", "x": 650, "y": 360, "demand": 2, "priority": "normal"},
+    {"id": "D19", "x": 720, "y": 175, "demand": 4, "priority": "normal"},
+    {"id": "D20", "x": 770, "y": 335, "demand": 3, "priority": "high"}
+  ],
+  "vehicles": [
+    {"id": "V01", "capacity": 32, "autonomy": 1800, "color": [30, 90, 200]},
+    {"id": "V02", "capacity": 32, "autonomy": 1800, "color": [20, 145, 90]},
+    {"id": "V03", "capacity": 32, "autonomy": 1800, "color": [220, 100, 30]}
+  ]
+}

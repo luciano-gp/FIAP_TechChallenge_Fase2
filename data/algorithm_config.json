@@ -1,0 +1,15 @@
+{
+  "population_size": 100,
+  "max_generations": 500,
+  "mutation_probability": 0.25,
+  "crossover_probability": 0.9,
+  "stagnation_limit": 75,
+  "valid_stability_limit": 50,
+  "random_seed": 42,
+  "capacity_penalty": 10000,
+  "autonomy_penalty": 10000,
+  "priority_penalty": 100,
+  "critical_penalty": 100000,
+  "critical_position_limit": 1,
+  "vehicle_swap_probability": 0.2
+}
