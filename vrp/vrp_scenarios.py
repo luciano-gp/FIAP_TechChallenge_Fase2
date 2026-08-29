@@ -8,6 +8,7 @@ from vrp.vrp_domain import Delivery, Scenario, load_scenario
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
+# Carrega variações do cenário base para benchmark e testes de robustez.
 SCENARIO_PATH = DATA_DIR / "hospital_scenario.json"
 SCENARIOS_CONFIG_PATH = DATA_DIR / "scenarios.json"
 SCENARIO_NAMES = tuple(
@@ -16,6 +17,7 @@ SCENARIO_NAMES = tuple(
 
 
 def _apply_definition(base: Scenario, definition: dict) -> Scenario:
+    # Ajusta a demanda, prioridades e frota conforme uma definição de cenário alternativo.
     deliveries = list(base.deliveries)
     priority_replacements = definition.get("delivery_priority_replacements", {})
     priority_by_id = definition.get("delivery_priority_by_id", {})
@@ -41,6 +43,7 @@ def _apply_definition(base: Scenario, definition: dict) -> Scenario:
 
 
 def load_benchmark_scenarios(path: str = str(SCENARIO_PATH)) -> Dict[str, Scenario]:
+    # Monta os cenários de benchmark usados em comparação entre estratégias de solução.
     base = load_scenario(path)
     definitions = json.loads(SCENARIOS_CONFIG_PATH.read_text(encoding="utf-8"))
     return {

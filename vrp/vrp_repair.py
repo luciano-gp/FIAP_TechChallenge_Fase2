@@ -5,6 +5,7 @@ from vrp.vrp_evaluator import calculate_distance
 
 
 def _route_distance(scenario: Scenario, deliveries: List[Delivery]) -> float:
+    # Calcula a distância total da rota, incluindo o retorno ao ponto de origem.
     points = [scenario.depot.location]
     points.extend(delivery.location for delivery in deliveries)
     points.append(scenario.depot.location)
@@ -26,6 +27,7 @@ def _best_insertion_distance(
 
 
 def repair_routes(scenario: Scenario, routes: Dict[str, List[str]]) -> Dict[str, List[str]]:
+    # Reorganiza a rota para remover duplicatas, incluir faltantes e respeitar prioridades.
     deliveries = _delivery_map(scenario)
     repaired = {vehicle.id: [] for vehicle in scenario.vehicles}
     assigned = set()

@@ -16,6 +16,7 @@ from vrp.vrp_scenarios import load_benchmark_scenarios
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RESULTS_DIR = Path("results")
+# Diretorio de saida para arquivos CSV e relatórios de benchmark.
 
 
 @dataclass(frozen=True)
@@ -69,6 +70,7 @@ def _evaluate_order(
     delivery_ids: List[str],
     config: Dict[str, float],
 ) -> SolutionEvaluation:
+    # Avalia uma ordem completa de entregas reaproveitando a mesma rotina do algoritmo.
     vehicle_ids = [vehicle.id for vehicle in scenario.vehicles]
     routes = split_solution(delivery_ids, vehicle_ids)
     return evaluate_solution(
@@ -85,6 +87,7 @@ def _evaluate_order(
 def random_solution(
     scenario: Scenario, config: Dict[str, float], samples: int = 100
 ) -> SolutionEvaluation:
+    # Gera varias permutacoes aleatorias e escolhe a melhor avaliacao.
     rng = random.Random(int(config["random_seed"]))
     delivery_ids = [delivery.id for delivery in scenario.deliveries]
     candidates = [rng.sample(delivery_ids, len(delivery_ids)) for _ in range(samples)]
@@ -95,6 +98,7 @@ def random_solution(
 def nearest_neighbor_solution(
     scenario: Scenario, config: Dict[str, float]
 ) -> SolutionEvaluation:
+    # Constrói uma rota por escolha local do ponto mais proximo disponivel.
     remaining = {delivery.id: delivery for delivery in scenario.deliveries}
     routes = {vehicle.id: [] for vehicle in scenario.vehicles}
 
@@ -152,6 +156,7 @@ def run_benchmark(
     scenario: Scenario, config: Dict[str, float], scenario_name: str = "base",
     selected_methods: Optional[Sequence[str]] = None,
 ) -> List[BenchmarkResult]:
+    # Executa a comparacao entre os metodos de solucao e registra o desempenho.
     results = []
     all_methods = [
         ("random", lambda: random_solution(scenario, config)),
@@ -195,6 +200,7 @@ def run_benchmark_repetitions(
     scenario: Scenario, config: Dict[str, float], repetitions: int = 5,
     scenario_name: str = "base",
 ) -> List[BenchmarkResult]:
+    # Reexecuta o benchmark para medir estabilidade estatistica da estrategia.
     if repetitions < 1:
         raise ValueError("Repetitions must be positive")
 
@@ -222,6 +228,7 @@ def run_benchmark_repetitions(
 def write_benchmark_csv(
     results: List[BenchmarkResult], config: Dict[str, float], path: str
 ) -> None:
+    # Exporta os resultados detalhados em CSV para analise posterior.
     rows = [
         {
             "method": result.method,
@@ -247,6 +254,7 @@ def write_benchmark_csv(
 
 
 def write_benchmark_summary_csv(results: List[BenchmarkResult], path: str) -> None:
+    # Agrupa as execucoes por metodo e calcula estatisticas resumidas.
     grouped = {}
     for result in results:
         grouped.setdefault((result.scenario, result.method), []).append(result)
@@ -284,6 +292,7 @@ def write_benchmark_summary_csv(results: List[BenchmarkResult], path: str) -> No
 
 
 def write_benchmark_evolution_csv(results: List[BenchmarkResult], path: str) -> None:
+    # Salva a evolucao do fitness por geracao para cada metodo testado.
     rows = []
     for result in results:
         rows.extend(
@@ -303,6 +312,7 @@ def write_benchmark_evolution_csv(results: List[BenchmarkResult], path: str) -> 
 
 
 def main() -> None:
+    # CLI que executa o benchmark completo para um ou mais cenarios do problema.
     parser = argparse.ArgumentParser(description="Compara metodos de roteamento VRP")
     parser.add_argument("--repetitions", type=int, default=5)
     parser.add_argument("--generations", type=int, default=None)

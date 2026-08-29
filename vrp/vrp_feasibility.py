@@ -21,6 +21,7 @@ class FeasibilityReport:
 
 
 def assess_scenario(scenario: Scenario) -> FeasibilityReport:
+    # Verifica se o cenário tem capacidade e autonomia mínimos para ser viável.
     total_demand = sum(delivery.demand for delivery in scenario.deliveries)
     total_capacity = sum(vehicle.capacity for vehicle in scenario.vehicles)
     critical_deliveries = sum(

@@ -15,6 +15,7 @@ def build_solution_summary(
     comparison: Optional[Sequence[Mapping[str, Any]]] = None,
     average_speed: Optional[float] = None,
 ) -> Dict[str, Any]:
+    # Transforma a avaliação técnica em um JSON estruturado para API e relatórios.
     feasibility = assess_scenario(scenario)
     deliveries_by_id = {delivery.id: delivery for delivery in scenario.deliveries}
     priority_counts: Dict[str, int] = {}
@@ -217,6 +218,7 @@ def build_solution_summary(
 
 
 def save_solution_summary(summary: Mapping[str, Any], path: str) -> None:
+    # Salva o relatório em JSON para uso em dashboards, APIs ou análise posterior.
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(

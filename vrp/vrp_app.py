@@ -16,6 +16,7 @@ CONFIG_PATH = PROJECT_ROOT / "data" / "algorithm_config.json"
 WIDTH, HEIGHT = 1100, 600
 MAP_WIDTH = 800
 NODE_RADIUS = 7
+# Configura o ambiente visual e os caminhos dos dados usados na simulação.
 
 
 def run_once(
@@ -23,12 +24,14 @@ def run_once(
     config_path: str = str(CONFIG_PATH),
     scenario_name: str = "base",
 ) -> Tuple[SolutionEvaluation, List[float]]:
+    # Executa o algoritmo em um cenário específico, retornando avaliação e histórico.
     scenario = load_benchmark_scenarios(scenario_path)[scenario_name]
     config = load_algorithm_config(config_path)
     return run_genetic_algorithm(scenario, **config)
 
 
 def _screen_locations(scenario: Scenario) -> Dict[str, Tuple[int, int]]:
+    # Converte coordenadas do problema para posições no mapa visual.
     locations = [delivery.location for delivery in scenario.deliveries]
     locations.append(scenario.depot.location)
     max_x = max(location[0] for location in locations)
@@ -49,6 +52,7 @@ def _draw_text(screen, font, text: str, position: Tuple[int, int], color) -> Non
 
 
 def _draw_solution(screen, scenario: Scenario, evaluation: SolutionEvaluation) -> None:
+    # Desenha as rotas e os pontos de entrega em um mapa 2D.
     import pygame
 
     locations = _screen_locations(scenario)
@@ -87,6 +91,7 @@ def _draw_solution(screen, scenario: Scenario, evaluation: SolutionEvaluation) -
 
 
 def _draw_history(screen, history: List[float]) -> None:
+    # Gráfico simples da evolução do fitness ao longo das gerações.
     import pygame
 
     if len(history) < 2:
@@ -107,6 +112,7 @@ def _draw_panel(
     screen, scenario: Scenario, evaluation: SolutionEvaluation,
     generation_number: int, history: List[float],
 ) -> None:
+    # Exibe métricas da solução atual e do histórico de evolução na tela.
     import pygame
 
     font = pygame.font.SysFont("DejaVu Sans", 16)
@@ -134,6 +140,7 @@ def _draw_panel(
 
 
 def main(max_generations: Optional[int] = None, scenario_name: str = "base") -> None:
+    # Loop principal da visualização: executa gerações e renderiza a solução atual.
     import pygame
 
     scenario = load_benchmark_scenarios(str(SCENARIO_PATH))[scenario_name]

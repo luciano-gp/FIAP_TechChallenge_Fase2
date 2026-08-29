@@ -9,8 +9,9 @@ from vrp.vrp_repair import repair_routes
 
 RoutePlan = Tuple[List[str], List[int]]
 
-
+# Representa cada indivíduo como uma ordem de entregas e pontos de quebra por veículo.
 def split_solution(delivery_ids: Sequence[str], vehicle_ids: Sequence[str]) -> Dict[str, List[str]]:
+    # Divide a sequência em rotas quase iguais, preservando o número total de entregas.
     if not vehicle_ids:
         raise ValueError("At least one vehicle is required")
 
@@ -27,6 +28,7 @@ def split_solution(delivery_ids: Sequence[str], vehicle_ids: Sequence[str]) -> D
 def split_variable_solution(
     delivery_ids: Sequence[str], breakpoints: Sequence[int], vehicle_ids: Sequence[str]
 ) -> Dict[str, List[str]]:
+    # Cria cortes variáveis para suportar rotas com tamanhos diferentes por veículo.
     if not vehicle_ids:
         raise ValueError("At least one vehicle is required")
 
@@ -44,6 +46,7 @@ def split_variable_solution(
 def generate_population(
     delivery_ids: Sequence[str], population_size: int, rng: random.Random
 ) -> List[List[str]]:
+    # Gera as permutações iniciais da população para o algoritmo genético.
     return [rng.sample(list(delivery_ids), len(delivery_ids))
             for _ in range(population_size)]
 
@@ -51,6 +54,7 @@ def generate_population(
 def generate_route_population(
     delivery_ids: Sequence[str], vehicle_count: int, population_size: int, rng: random.Random
 ) -> List[RoutePlan]:
+    # Cada indivíduo inclui a ordem das entregas e os pontos de quebra entre veículos.
     if vehicle_count < 1:
         raise ValueError("At least one vehicle is required")
     if len(delivery_ids) < vehicle_count - 1:
@@ -66,6 +70,7 @@ def generate_route_population(
 def order_crossover(
     parent1: Sequence[str], parent2: Sequence[str], rng: random.Random
 ) -> List[str]:
+    # Mantém a ordem relativa dos genes e preserva a validade da permutação.
     if len(parent1) != len(parent2):
         raise ValueError("Parents must have the same length")
     if len(parent1) < 2:
@@ -84,6 +89,7 @@ def order_crossover(
 
 
 def mutate(solution: Sequence[str], probability: float, rng: random.Random) -> List[str]:
+    # Inverte um trecho da rota para explorar vizinhos da solução atual.
     mutated = list(solution)
     if len(mutated) >= 2 and rng.random() < probability:
         start, end = sorted(rng.sample(range(len(mutated)), 2))
@@ -95,6 +101,7 @@ def mutate_between_vehicles(
     solution: Sequence[str], vehicle_count: int, probability: float, rng: random.Random,
     breakpoints: Optional[Sequence[int]] = None,
 ) -> List[str]:
+    # Troca entregas entre veículos para melhorar a distribuição da carga e da rota.
     mutated = list(solution)
     if vehicle_count < 2 or len(mutated) < vehicle_count or rng.random() >= probability:
         return mutated

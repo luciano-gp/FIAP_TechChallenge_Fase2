@@ -5,6 +5,7 @@ from typing import Dict, List, Mapping, Tuple
 from vrp.vrp_domain import Delivery, Scenario, Vehicle
 
 
+# Penaliza entregas menos urgentes conforme a posição e o nível de prioridade.
 PRIORITY_WEIGHTS = {
     "critical": 4.0,
     "high": 3.0,
@@ -54,10 +55,12 @@ class SolutionEvaluation:
 def calculate_distance(
     point1: Tuple[float, float], point2: Tuple[float, float]
 ) -> float:
+    # Distância Euclidiana entre dois pontos do mapa.
     return math.hypot(point1[0] - point2[0], point1[1] - point2[1])
 
 
 def _route_distance(scenario: Scenario, deliveries: List[Delivery]) -> float:
+    # Soma o percurso da rota, incluindo ida e volta ao depósito.
     points = [scenario.depot.location]
     points.extend(delivery.location for delivery in deliveries)
     points.append(scenario.depot.location)
@@ -74,8 +77,8 @@ def evaluate_solution(
     critical_penalty: float = 100000,
     critical_position_limit: int = 1,
 ) -> SolutionEvaluation:
+    # Válida o conjunto de rotas completo e calcula todas as penalidades da solução.
     deliveries_by_id = {delivery.id: delivery for delivery in scenario.deliveries}
-    vehicles_by_id = {vehicle.id: vehicle for vehicle in scenario.vehicles}
     seen_ids: List[str] = []
     route_metrics: Dict[str, RouteMetrics] = {}
     normalized_routes: Dict[str, List[str]] = {}
