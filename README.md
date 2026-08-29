@@ -226,6 +226,8 @@ O payload contém dados para três usos:
 
 O campo `comparison` pode receber os resultados de outros métodos, como vizinho mais próximo, para que a LLM compare desempenho. O campo `transport` pode receber uma velocidade média para estimar o tempo total da rota.
 
-## Observação
+## Integrantes
+Cristofer Gaier Sais (rm374802)
 
-A integração com modelos de linguagem, prevista no requisito 3.2, será desenvolvida em uma etapa posterior.
+
+Luciano Gomes Pereira Júnior (rm374898)
