@@ -130,7 +130,7 @@ O payload base contém:
 - **Relatórios de eficiência:** fitness, distância, penalizações, utilização de capacidade/autonomia, evolução por geração e validade.
 - **Sugestões logísticas:** violações, entregas críticas, gargalos de restrições e diagnóstico de viabilidade factual.
 
-**O Fluxo de Processamento de Linguagem Natural (PLN):** Ao rodar a aplicação Web, esse payload JSON é extraído pelo backend (FastAPI) e fornecido como contexto estruturado para o modelo **Gemini 1.5 Flash** através do LangChain. A IA traduz as métricas logísticas gerando instruções precisas em linguagem natural e apontando gargalos de operação diretamente na tela do Streamlit. Além disso, a integração com o LangChain habilita um endpoint de chat dinâmico focado no contexto do roteamento atual.
+**O Fluxo de Processamento de Linguagem Natural (PLN):** Ao rodar a aplicação Web, esse payload JSON é extraído pelo backend (FastAPI) e fornecido como contexto estruturado para o modelo **Gemini 3.5 Flash Lite** através do LangChain. A IA traduz as métricas logísticas gerando instruções precisas em linguagem natural e apontando gargalos de operação diretamente na tela do Streamlit. Além disso, a integração com o LangChain habilita um endpoint de chat dinâmico focado no contexto do roteamento atual.
 
 ---
 
@@ -173,7 +173,7 @@ graph TD
         C -->|2. Injeta JSON no Prompt| F(LangChain Agent)
     end
   
-    F <-->|API Rest| G((Google Gemini 1.5 Flash))
+    F <-->|API Rest| G((Google Gemini 3.5 Flash Lite))
   
     style B fill:#ff4b4b,stroke:#fff,stroke-width:2px,color:#fff
     style C fill:#009688,stroke:#fff,stroke-width:2px,color:#fff
