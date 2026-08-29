@@ -7,13 +7,14 @@ import statistics
 import time
 from typing import Dict, List, Optional, Sequence
 
-from vrp_domain import Scenario, load_algorithm_config, load_scenario
-from vrp_evaluator import SolutionEvaluation, calculate_distance, evaluate_solution
-from vrp_genetic import run_genetic_algorithm, split_solution
-from vrp_repair import repair_routes
-from vrp_scenarios import load_benchmark_scenarios
+from vrp.vrp_domain import Scenario, load_algorithm_config, load_scenario
+from vrp.vrp_evaluator import SolutionEvaluation, calculate_distance, evaluate_solution
+from vrp.vrp_genetic import run_genetic_algorithm, split_solution
+from vrp.vrp_repair import repair_routes
+from vrp.vrp_scenarios import load_benchmark_scenarios
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RESULTS_DIR = Path("results")
 
 
@@ -309,8 +310,8 @@ def main() -> None:
     parser.add_argument("--scenarios", nargs="+", default=["base"])
     arguments = parser.parse_args()
 
-    scenarios = load_benchmark_scenarios()
-    config = load_algorithm_config("data/algorithm_config.json")
+    scenarios = load_benchmark_scenarios(str(PROJECT_ROOT / "data" / "hospital_scenario.json"))
+    config = load_algorithm_config(str(PROJECT_ROOT / "data" / "algorithm_config.json"))
     if arguments.generations is not None:
         config["max_generations"] = arguments.generations
     unknown = set(arguments.scenarios) - set(scenarios)

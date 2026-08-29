@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
-from vrp_domain import Scenario
-from vrp_evaluator import calculate_distance
+from vrp.vrp_domain import Scenario
+from vrp.vrp_evaluator import calculate_distance
 
 
 @dataclass(frozen=True)

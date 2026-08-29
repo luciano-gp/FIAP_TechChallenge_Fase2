@@ -1,24 +1,25 @@
 import unittest
 from pathlib import Path
 
-from vrp_domain import load_scenario
-from vrp_benchmark import (
+from vrp.vrp_domain import load_scenario
+from vrp.vrp_benchmark import (
     nearest_neighbor_solution,
     run_benchmark,
     write_benchmark_summary_csv,
 )
-from vrp_evaluator import evaluate_solution
-from vrp_genetic import run_genetic_algorithm
-from vrp_genetic import mutate_between_vehicles, split_variable_solution
-from vrp_repair import repair_routes
-from vrp_scenarios import SCENARIO_NAMES, load_benchmark_scenarios
-from vrp_feasibility import assess_scenario
-from vrp_reporting import build_solution_summary, save_solution_summary
+from vrp.vrp_evaluator import evaluate_solution
+from vrp.vrp_genetic import run_genetic_algorithm
+from vrp.vrp_genetic import mutate_between_vehicles, split_variable_solution
+from vrp.vrp_repair import repair_routes
+from vrp.vrp_scenarios import SCENARIO_NAMES, load_benchmark_scenarios
+from vrp.vrp_feasibility import assess_scenario
+from vrp.vrp_reporting import build_solution_summary, save_solution_summary
 from vrp import run_once
 
 
-ROOT = Path(__file__).parent
-SCENARIO_PATH = ROOT / "data" / "hospital_scenario.json"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ROOT = PROJECT_ROOT
+SCENARIO_PATH = PROJECT_ROOT / "data" / "hospital_scenario.json"
 
 
 class VrpTests(unittest.TestCase):
@@ -198,7 +199,7 @@ class VrpTests(unittest.TestCase):
         self.assertFalse(assess_scenario(scenarios["capacidade_insuficiente"]).is_feasible)
 
     def test_benchmark_result_path_uses_results_directory(self):
-        from vrp_benchmark import RESULTS_DIR
+        from vrp.vrp_benchmark import RESULTS_DIR
 
         self.assertEqual(str(RESULTS_DIR), "results")
 

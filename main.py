@@ -2,10 +2,11 @@ import argparse
 import subprocess
 import sys
 from pathlib import Path
-from vrp_scenarios import SCENARIO_NAMES
+
+from vrp.vrp_scenarios import SCENARIO_NAMES
 
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent
 
 
 def run_tsp() -> int:
@@ -13,7 +14,7 @@ def run_tsp() -> int:
 
 
 def run_vrp() -> int:
-    return subprocess.call([sys.executable, str(ROOT / "vrp.py")], cwd=ROOT)
+    return subprocess.call([sys.executable, "-m", "vrp.vrp_app"], cwd=ROOT)
 
 
 def main() -> int:
@@ -41,7 +42,7 @@ def main() -> int:
     if args.mode == "tsp":
         command = [sys.executable, "-m", "tsp_base.tsp"]
     else:
-        command = [sys.executable, str(ROOT / "vrp.py")]
+        command = [sys.executable, "-m", "vrp.vrp_app"]
     if args.generations is not None:
         command.extend(["--generations", str(args.generations)])
     if args.mode == "vrp":

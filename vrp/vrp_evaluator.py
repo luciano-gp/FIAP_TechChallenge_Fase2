@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import math
 from typing import Dict, List, Mapping, Tuple
 
-from vrp_domain import Delivery, Scenario, Vehicle
+from vrp.vrp_domain import Delivery, Scenario, Vehicle
 
 
 PRIORITY_WEIGHTS = {

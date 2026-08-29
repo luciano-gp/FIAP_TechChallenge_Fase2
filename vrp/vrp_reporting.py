@@ -2,9 +2,9 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence
 
-from vrp_domain import Scenario
-from vrp_evaluator import SolutionEvaluation, calculate_distance
-from vrp_feasibility import assess_scenario
+from vrp.vrp_domain import Scenario
+from vrp.vrp_evaluator import SolutionEvaluation, calculate_distance
+from vrp.vrp_feasibility import assess_scenario
 
 
 def build_solution_summary(

@@ -2,9 +2,9 @@ import random
 from itertools import count
 from typing import Callable, Dict, List, Optional, Sequence, Tuple
 
-from vrp_domain import Scenario
-from vrp_evaluator import SolutionEvaluation, evaluate_solution
-from vrp_repair import repair_routes
+from vrp.vrp_domain import Scenario
+from vrp.vrp_evaluator import SolutionEvaluation, evaluate_solution
+from vrp.vrp_repair import repair_routes
 
 
 RoutePlan = Tuple[List[str], List[int]]

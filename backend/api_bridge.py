@@ -5,10 +5,10 @@ from pathlib import Path
 ROOT = Path(__file__).parent.parent
 sys.path.append(str(ROOT))
 
-from vrp_scenarios import load_benchmark_scenarios
-from vrp_domain import load_algorithm_config
-from vrp_genetic import run_genetic_algorithm
-from vrp_reporting import build_solution_summary
+from vrp.vrp_scenarios import load_benchmark_scenarios
+from vrp.vrp_domain import load_algorithm_config
+from vrp.vrp_genetic import run_genetic_algorithm
+from vrp.vrp_reporting import build_solution_summary
 
 def executar_vrp_api(scenario_name: str, generations: int, pop_size: int, mut_prob: float):
     # Carrega cenários configurados em data/scenarios.json e data/hospital_scenario.json

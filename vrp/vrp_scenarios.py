@@ -3,12 +3,13 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Dict
 
-from vrp_domain import Delivery, Scenario, load_scenario
+from vrp.vrp_domain import Delivery, Scenario, load_scenario
 
 
-ROOT = Path(__file__).parent
-SCENARIO_PATH = ROOT / "data" / "hospital_scenario.json"
-SCENARIOS_CONFIG_PATH = ROOT / "data" / "scenarios.json"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = PROJECT_ROOT / "data"
+SCENARIO_PATH = DATA_DIR / "hospital_scenario.json"
+SCENARIOS_CONFIG_PATH = DATA_DIR / "scenarios.json"
 SCENARIO_NAMES = tuple(
     json.loads(SCENARIOS_CONFIG_PATH.read_text(encoding="utf-8"))
 )

@@ -2,17 +2,17 @@ from pathlib import Path
 import argparse
 from typing import Dict, List, Optional, Tuple
 
-from vrp_domain import Scenario, load_algorithm_config
-from vrp_evaluator import SolutionEvaluation
-from vrp_genetic import iter_genetic_algorithm, run_genetic_algorithm
-from vrp_feasibility import assess_scenario
-from vrp_reporting import build_solution_summary, save_solution_summary
-from vrp_scenarios import SCENARIO_NAMES, load_benchmark_scenarios
+from vrp.vrp_domain import Scenario, load_algorithm_config
+from vrp.vrp_evaluator import SolutionEvaluation
+from vrp.vrp_genetic import iter_genetic_algorithm, run_genetic_algorithm
+from vrp.vrp_feasibility import assess_scenario
+from vrp.vrp_reporting import build_solution_summary, save_solution_summary
+from vrp.vrp_scenarios import SCENARIO_NAMES, load_benchmark_scenarios
 
 
-ROOT = Path(__file__).parent
-SCENARIO_PATH = ROOT / "data" / "hospital_scenario.json"
-CONFIG_PATH = ROOT / "data" / "algorithm_config.json"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SCENARIO_PATH = PROJECT_ROOT / "data" / "hospital_scenario.json"
+CONFIG_PATH = PROJECT_ROOT / "data" / "algorithm_config.json"
 WIDTH, HEIGHT = 1100, 600
 MAP_WIDTH = 800
 NODE_RADIUS = 7

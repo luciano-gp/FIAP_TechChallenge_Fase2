@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
-from schemas import OptimizationRequest, ChatRequest
-from llm_agent import gerar_instrucoes_llm, responder_pergunta_llm
-from api_bridge import executar_vrp_api
+
+from backend.schemas import OptimizationRequest, ChatRequest
+from backend.llm_agent import gerar_instrucoes_llm, responder_pergunta_llm
+from backend.api_bridge import executar_vrp_api
 
 app = FastAPI(title="API Otimização VRP - Tech Challenge")
 

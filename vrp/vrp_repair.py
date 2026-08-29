@@ -1,7 +1,7 @@
 from typing import Dict, List
 
-from vrp_domain import Delivery, Scenario
-from vrp_evaluator import calculate_distance
+from vrp.vrp_domain import Delivery, Scenario
+from vrp.vrp_evaluator import calculate_distance
 
 
 def _route_distance(scenario: Scenario, deliveries: List[Delivery]) -> float:

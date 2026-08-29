@@ -1,78 +1,55 @@
-# Otimizador de Rotas Hospitalares & Assistente Logístico IA
+# Otimizador de Rotas Hospitalares
 
 Projeto desenvolvido para o Tech Challenge da Fase 2 da FIAP. O sistema utiliza algoritmos genéticos para otimizar rotas de entrega de medicamentos e insumos hospitalares.
 
-O motor de roteamento possui duas implementações base:
+O projeto possui duas implementações:
 
 - **TSP original:** versão inicial do problema do caixeiro viajante, mantida para comparação.
 - **VRP otimizado:** versão hospitalar com múltiplos veículos, prioridades, capacidade de carga e autonomia.
 
-A arquitetura do projeto foi expandida para suportar duas formas de execução independentes: uma **Aplicação Web (Microsserviços)** com Inteligência Artificial e uma **Interface CLI (Local)** para visualizações matemáticas e testes de estresse.
-
 ## Requisitos
 
-**Para a Aplicação Web (IA e Dashboards):**
-
-- Docker e Docker Compose.
-- Chave de API do Google AI Studio (Gemini).
-
-**Para a Execução Local (CLI e Pygame):**
-
-- Python 3.9 e Conda.
+- Python 3.9.
+- Conda.
 - Sistema operacional com suporte ao Pygame.
-- As dependências estão declaradas em `environment.yml`.
 
----
+As dependências estão declaradas em [environment.yml](environment.yml).
 
-## 1. Execução via Docker (Frontend, Backend e IA)
+## Instalação
 
-Esta é a forma recomendada para demonstrar a solução completa, englobando o motor de roteamento e a geração de relatórios logísticos via LLM.
-
-**Configuração da Chave de API:**
-Na raiz do projeto, crie um arquivo `.env` e insira sua chave do Google Gemini:
-
-```env
-GOOGLE_API_KEY=sua_chave_gemini_aqui
-```
-
-**Subindo a Aplicação:**
-No terminal, execute o orquestrador de contêineres na raiz do projeto:
-
-```bash
-docker-compose up --build
-```
-
-- **Painel Interativo (Streamlit):** Acesse `http://localhost:8501`.
-- **Documentação da API (FastAPI):** Acesse `http://localhost:8000/docs`.
-
-A interface enviará os parâmetros para o backend, que executará o algoritmo genético e repassará os dados estruturados para o LangChain interpretar e formular as instruções aos motoristas. O sistema web também inclui um chat interativo, permitindo que os usuários façam perguntas em linguagem natural sobre as rotas geradas e restrições operacionais.
-
----
-
-## 2. Execução Local via Conda (CLI e Benchmarks)
-
-Ideal para visualização detalhada em tempo real (via Pygame) da evolução das rotas e diagnóstico de viabilidade. Também permite a execução de benchmarks estatísticos entre diferentes estratégias de roteamento.
-
-### Instalação
-
-Na pasta do projeto, crie e ative o ambiente Conda:
+Na pasta do projeto, crie o ambiente Conda:
 
 ```bash
 conda env create --file environment.yml
+```
+
+Ative o ambiente:
+
+```bash
 conda activate fiap_tsp
 ```
 
-Para atualizar um ambiente já existente: `conda env update --file environment.yml --prune`.
+Para atualizar um ambiente já existente:
 
-### Visualização por Cenário (Pygame)
+```bash
+conda env update --file environment.yml --prune
+```
 
-O ponto de entrada local é `main.py`. O modo VRP otimizado é executado por padrão.
+## Execução
+
+O ponto de entrada é [main.py](main.py). O modo otimizado é executado por padrão:
 
 ```bash
 python main.py
 ```
 
-Para visualizar um cenário específico em tempo real, limitando as gerações:
+Para executar explicitamente o VRP hospitalar:
+
+```bash
+python main.py --mode vrp
+```
+
+Para visualizar um cenário específico em tempo real:
 
 ```bash
 python main.py --mode vrp --scenario alta_demanda --generations 1000
@@ -80,103 +57,175 @@ python main.py --mode vrp --scenario alta_demanda --generations 1000
 
 Cenários disponíveis: `base`, `alta_prioridade`, `alta_demanda`, `baixa_autonomia`, `frota_reduzida`, `maior`, `capacidade_insuficiente` e `autonomia_insuficiente`.
 
-Durante a execução, pressione `Q` ou feche a janela para encerrar o programa. O vizinho mais próximo é determinístico e também passa pelo reparo de rotas antes da avaliação; em cenários fisicamente inviáveis (ex: demanda superior à capacidade), a solução permanece inválida e a penalização é preservada.
+O vizinho mais próximo é determinístico e também passa pelo reparo de rotas antes da avaliação. Em cenários fisicamente inviáveis, como demanda superior à capacidade disponível ou autonomia insuficiente, a solução permanece inválida e a penalização é preservada.
 
-### Benchmark Estatístico
-
-O benchmark compara três estratégias de roteamento: rota aleatória, vizinho mais próximo e algoritmo genético.
-
-Execute uma rodada de testes:
+Para executar o TSP original:
 
 ```bash
-python vrp_benchmark.py --repetitions 10 --generations 1000
+python main.py --mode tsp
 ```
 
-Para executar todos os cenários disponíveis e exportar resultados consolidados:
+Também é possível executar os arquivos diretamente:
 
 ```bash
-python vrp_benchmark.py \
+python -m tsp_base.tsp
+python -m vrp.vrp_app
+```
+
+Durante a execução, pressione `Q` ou feche a janela para encerrar o programa.
+
+### Limite de gerações
+
+É possível definir um limite de gerações para comparar as implementações em condições equivalentes:
+
+```bash
+python main.py --mode tsp --generations 1000
+python main.py --mode vrp --generations 1000
+```
+
+Sem o parâmetro `--generations`, a execução continua até o usuário pressionar `Q`.
+
+### Visualização por cenário
+
+O modo otimizado permite visualizar os cenários disponíveis em tempo real. A janela mostra o mapa, as rotas, a sequência de entregas, as prioridades, os indicadores dos veículos e a evolução do fitness.
+
+```bash
+python main.py --mode vrp --scenario base --generations 1000
+python main.py --mode vrp --scenario alta_prioridade --generations 1000
+python main.py --mode vrp --scenario alta_demanda --generations 1000
+python main.py --mode vrp --scenario baixa_autonomia --generations 1000
+python main.py --mode vrp --scenario frota_reduzida --generations 1000
+python main.py --mode vrp --scenario maior --generations 1000
+```
+
+Para deixar a simulação rodando até o usuário pressionar `Q`, omita o limite:
+
+```bash
+python main.py --mode vrp --scenario alta_demanda
+```
+
+Ao finalizar cada execução do modo `vrp`, o sistema monta um report estruturado em formato JSON, com os dados da solução, das entregas, dos veículos, das restrições e da evolução. O arquivo é salvo automaticamente em `results/vrp_report_<cenario>.json`.
+
+Os arquivos CSV gerados pelo benchmark são independentes desse report JSON e continuam sendo salvos na pasta `results/`.
+
+## Benchmark
+
+O benchmark compara três estratégias de roteamento:
+
+- Rota aleatória.
+- Vizinho mais próximo.
+- Algoritmo genético.
+
+Execute, por exemplo:
+
+```bash
+python -m vrp.vrp_benchmark --repetitions 10 --generations 1000
+```
+
+Para executar todos os cenários disponíveis:
+
+```bash
+python -m vrp.vrp_benchmark --scenarios base alta_prioridade alta_demanda baixa_autonomia frota_reduzida maior --repetitions 10 --generations 1000
+```
+
+Os cenários variam a quantidade de entregas, prioridades, demandas, autonomia e tamanho da frota.
+
+Os resultados são salvos automaticamente na pasta `results/`:
+
+- `results/benchmark_results.csv`: dados de cada execução.
+- `results/benchmark_results_summary.csv`: resumo estatístico por método.
+- `results/benchmark_results_evolution.csv`: melhor fitness registrado a cada geração.
+
+O resumo separa `mean_distance`, `mean_penalty` e `mean_fitness`, permitindo distinguir a distância física das penalizações por restrições.
+
+Também é possível escolher o arquivo de saída:
+
+```bash
+python -m vrp.vrp_benchmark --repetitions 10 --generations 1000 --output resultados.csv
+```
+
+Nesse caso, os arquivos serão salvos como `results/resultados.csv` e `results/resultados_summary.csv`.
+
+Para executar todos os cenários:
+
+```bash
+python -m vrp.vrp_benchmark \
 	--scenarios base alta_prioridade alta_demanda baixa_autonomia frota_reduzida maior \
 	--repetitions 10 \
 	--generations 1000 \
 	--output benchmark_results_all.csv
 ```
 
-Os resultados são salvos automaticamente na pasta `results/`, gerando arquivos de métricas de cada execução (`.csv`), resumos estatísticos (`_summary.csv`) e melhor fitness registrado a cada geração (`_evolution.csv`). O resumo estatístico separa a distância física das penalizações por restrições.
+Esse comando gera 126 registros detalhados e 18 linhas de resumo, salvando os arquivos em:
 
-### Testes Automatizados
-
-Execute os testes da lógica de roteamento com:
-
-```bash
-python -m unittest -v test_vrp.py
+```text
+results/benchmark_results_all.csv
+results/benchmark_results_all_summary.csv
 ```
 
-Execute os testes automatizados da API Web (FastAPI) com:
+Para uma execução rápida de validação:
 
 ```bash
-pytest backend/test_api.py
+python -m vrp.vrp_benchmark --scenarios base --repetitions 1 --generations 5 --output benchmark_smoke.csv
 ```
 
----
+## Testes
 
-## Integração com IA e Relatórios
+Execute os testes automatizados com:
 
-O modo `vrp` monta, ao final de cada execução, um report estruturado em formato JSON por meio da função `build_solution_summary()` em `vrp_reporting.py`.
+```bash
+python -m unittest -v vrp/test_vrp.py
+```
 
-O payload base contém:
+Para executar apenas os testes sem detalhes:
+
+```bash
+python -m unittest -q vrp/test_vrp.py
+```
+
+Para verificar a sintaxe dos módulos Python:
+
+```bash
+python -m py_compile main.py \
+	vrp/vrp_app.py vrp/vrp_domain.py vrp/vrp_evaluator.py vrp/vrp_repair.py \
+	vrp/vrp_genetic.py vrp/vrp_benchmark.py vrp/vrp_scenarios.py vrp/test_vrp.py \
+	tsp_base/tsp.py tsp_base/__init__.py tsp_base/genetic_algorithm.py \
+	tsp_base/draw_functions.py tsp_base/benchmark_att48.py
+```
+
+## Dados e configuração
+
+O cenário hospitalar e os parâmetros do algoritmo ficam separados do código:
+
+- [data/scenarios.json](data/scenarios.json): alterações aplicadas sobre o cenário-base.
+
+## Arquivos principais
+
+- [main.py](main.py): seleciona a implementação que será executada.
+- [tsp_base/tsp.py](tsp_base/tsp.py): implementação original do TSP.
+- [tsp_base/](tsp_base/): módulos, benchmark, demos e imagens exclusivos do TSP original.
+- [vrp/vrp_app.py](vrp/vrp_app.py): execução e visualização do VRP hospitalar.
+- [vrp/vrp_domain.py](vrp/vrp_domain.py): modelos e carregamento dos dados.
+- [vrp/vrp_genetic.py](vrp/vrp_genetic.py): algoritmo genético.
+- [vrp/vrp_evaluator.py](vrp/vrp_evaluator.py): avaliação das rotas e restrições.
+- [vrp/vrp_repair.py](vrp/vrp_repair.py): reparo de soluções inválidas.
+- [vrp/vrp_feasibility.py](vrp/vrp_feasibility.py): diagnóstico de viabilidade dos cenários.
+- [vrp/vrp_reporting.py](vrp/vrp_reporting.py): resumo estruturado das soluções para integração futura.
+- [vrp/vrp_benchmark.py](vrp/vrp_benchmark.py): comparação entre estratégias.
+- [vrp/test_vrp.py](vrp/test_vrp.py): testes automatizados.
+
+## Report para integração com LLM
+
+O modo `vrp` monta, ao final de cada execução, um report JSON em memória por meio de `build_solution_summary()` em [vrp_reporting.py](vrp_reporting.py). Esse report não é salvo automaticamente.
+
+O payload contém dados para três usos:
 
 - **Instruções de entrega:** rota ordenada, posição, ID, prioridade, demanda, localização e distância de cada trecho.
-- **Relatórios de eficiência:** fitness, distância, penalizações, utilização de capacidade/autonomia, evolução por geração e validade.
-- **Sugestões logísticas:** violações, entregas críticas, gargalos de restrições e diagnóstico de viabilidade factual.
+- **Relatórios de eficiência:** fitness, distância, penalizações, utilização de capacidade e autonomia, evolução por geração, tempo estimado e validade.
+- **Sugestões logísticas:** violações, entregas críticas, gargalos de capacidade/autonomia, diagnóstico de viabilidade, taxa de validade e recomendações factuais.
 
-**O Fluxo de Processamento de Linguagem Natural (PLN):** Ao rodar a aplicação Web, esse payload JSON é extraído pelo backend (FastAPI) e fornecido como contexto estruturado para o modelo **Gemini 3.5 Flash Lite** através do LangChain. A IA traduz as métricas logísticas gerando instruções precisas em linguagem natural e apontando gargalos de operação diretamente na tela do Streamlit. Além disso, a integração com o LangChain habilita um endpoint de chat dinâmico focado no contexto do roteamento atual.
+O campo `comparison` pode receber os resultados de outros métodos, como vizinho mais próximo, para que a LLM compare desempenho. O campo `transport` pode receber uma velocidade média para estimar o tempo total da rota.
 
----
+## Observação
 
-## Arquivos Principais
-
-**Microsserviços e APIs:**
-
-- `backend/main.py`: Endpoints da API e chamadas de microsserviço.
-- `backend/api_bridge.py`: Ponte de execução para o algoritmo genético em modo headless (sem interface gráfica).
-- `backend/llm_agent.py`: Configuração do agente de PLN via LangChain.
-- `backend/test_api.py`: Testes automatizados da API.
-- `frontend/app.py`: Interface de usuário interativa (Streamlit).
-- `docker-compose.yml`: Orquestração de infraestrutura local.
-
-**Domínio VRP e Algoritmo Genético:**
-
-- `main.py`: Ponto de entrada CLI (seleciona a implementação original).
-- `vrp.py`: Execução e visualização Pygame do VRP hospitalar.
-- `vrp_domain.py`: Modelos de classes e carregamento de dados.
-- `vrp_genetic.py` / `vrp_evaluator.py`: Motor de evolução, crossover, mutação e cálculo de penalizações.
-- `vrp_repair.py` / `vrp_feasibility.py`: Reparo de rotas inválidas e relatórios de viabilidade.
-- `vrp_reporting.py`: Empacotador do resumo estruturado em JSON para integração com LLM.
-- `vrp_benchmark.py`: Testes estatísticos entre estratégias.
-- `data/scenarios.json`: Definição de restrições aplicadas sobre o cenário-base.
-- `tsp_base/`: Módulos, scripts e benchmark exclusivos do TSP original.
-
-## Diagrama de Arquitetura
-
-```mermaid
-graph TD
-    A[Usuário / Logística] -->|Configura Cenários| B(Frontend: Streamlit)
-    A -->|Faz Perguntas via Chat| B
-    B -->|POST /otimizar| C(Backend: FastAPI)
-    B -->|POST /chat| C
-  
-    subgraph Contêiner Backend
-        C -->|1. Aciona Motor Headless| D{Algoritmo Genético VRP}
-        D -->|Gera JSON Estruturado| E[vrp_reporting.py]
-        E -->|Retorna Payload| C
-        C -->|2. Injeta JSON no Prompt| F(LangChain Agent)
-    end
-  
-    F <-->|API Rest| G((Google Gemini 3.5 Flash Lite))
-  
-    style B fill:#ff4b4b,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#009688,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#f6f8fa,stroke:#333,stroke-width:1px
-    style G fill:#4285f4,stroke:#fff,stroke-width:2px,color:#fff
-```
+A integração com modelos de linguagem, prevista no requisito 3.2, será desenvolvida em uma etapa posterior.
