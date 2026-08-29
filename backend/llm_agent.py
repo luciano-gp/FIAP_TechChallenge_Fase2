@@ -3,7 +3,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 
 def gerar_instrucoes_llm(json_report_algorithm: dict) -> str:
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.2)
+    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0.2)
     
     template = """
     Você é o coordenador logístico de um hospital universitário.
@@ -18,14 +18,17 @@ def gerar_instrucoes_llm(json_report_algorithm: dict) -> str:
     3. Destaque entregas críticas baseando-se em 'deliveries.critical_deliveries' e apresente as sugestões contidas em 'analysis.recommendations'.
     
     Responda em português (PT-BR) de forma direta e estruturada.
+    A unidade de medida da distância é em quilômetros (km).
     """
     
+    prompt = PromptTemplate(input_variables=["dados_rotas"], template=template)
+    chain = prompt | llm
     
     resultado = chain.invoke({"dados_rotas": json.dumps(json_report_algorithm, indent=2)})
     return resultado.content
 
 def responder_pergunta_llm(pergunta: str, contexto_json: dict) -> str:
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.2)
+    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0.2)
     
     template = """
     Você é um assistente logístico. Responda à pergunta do usuário baseando-se EXCLUSIVAMENTE 
