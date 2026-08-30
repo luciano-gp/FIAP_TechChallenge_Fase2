@@ -26,7 +26,7 @@ if iniciar:
             "mutation_probability": mut
         }
         
-        response = requests.post("http://backend:8000/otimizar", json=payload)
+        response = requests.post("http://backend:8000/otimizar", json=payload, timeout=None)
         
         if response.status_code == 200:
             data = response.json()
@@ -73,8 +73,9 @@ if "dados_brutos" in st.session_state:
         with st.chat_message("assistant"):
             with st.spinner("Analisando rotas..."):
                 res_chat = requests.post(
-                    "http://backend:8000/chat", 
-                    json={"pergunta": pergunta, "contexto_json": dados_brutos}
+                    "http://backend:8000/chat",
+                    json={"pergunta": pergunta, "contexto_json": dados_brutos},
+                    timeout=None,
                 )
                 if res_chat.status_code == 200:
                     resposta = res_chat.json()["resposta"]

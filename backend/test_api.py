@@ -1,7 +1,31 @@
 from fastapi.testclient import TestClient
 from main import app
 
+from backend.llm_agent import gerar_instrucoes_llm
+
 client = TestClient(app)
+
+
+def test_llm_sem_timeout_limitado(monkeypatch):
+    captured = {}
+
+    class DummyLLM:
+        def __or__(self, other):
+            return self
+
+        def invoke(self, payload):
+            return type("Resp", (), {"content": "ok"})()
+
+    def fake_llm(*args, **kwargs):
+        captured.update(kwargs)
+        return DummyLLM()
+
+    monkeypatch.setattr("backend.llm_agent.ChatGoogleGenerativeAI", fake_llm)
+
+    response = gerar_instrucoes_llm({"objective": {"valid": True}, "vehicles": [], "deliveries": {"critical_deliveries": []}, "analysis": {"recommendations": []}})
+
+    assert response == "ok"
+    assert captured.get("request_timeout") is None
 
 def test_otimizar_endpoint_valido():
     # Testa se a API responde corretamente com um cenário conhecido

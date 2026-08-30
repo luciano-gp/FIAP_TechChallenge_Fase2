@@ -2,8 +2,17 @@ import json
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 
+
+def _criar_llm() -> ChatGoogleGenerativeAI:
+    return ChatGoogleGenerativeAI(
+        model="gemini-3.5-flash-lite",
+        temperature=0.2,
+        request_timeout=None,
+    )
+
+
 def gerar_instrucoes_llm(json_report_algorithm: dict) -> str:
-    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0.2)
+    llm = _criar_llm()
     
     template = """
     Você é o coordenador logístico de um hospital universitário.
@@ -28,7 +37,7 @@ def gerar_instrucoes_llm(json_report_algorithm: dict) -> str:
     return resultado.content
 
 def responder_pergunta_llm(pergunta: str, contexto_json: dict) -> str:
-    llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", temperature=0.2)
+    llm = _criar_llm()
     
     template = """
     Você é um assistente logístico. Responda à pergunta do usuário baseando-se EXCLUSIVAMENTE 
