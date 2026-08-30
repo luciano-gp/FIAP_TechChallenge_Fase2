@@ -192,16 +192,17 @@ def main(max_generations: Optional[int] = None, scenario_name: str = "base") -> 
         print(f"Geracoes executadas: {len(history)}")
         for vehicle_id, route in evaluation.routes.items():
             print(f"{vehicle_id}: {' -> '.join(route)}")
-            summary = build_solution_summary(
-                scenario, evaluation, scenario_name, history
-            )
-            report_path = ROOT / "results" / f"vrp_report_{scenario_name}.json"
-            save_solution_summary(summary, str(report_path))
-            print(
-                f"Resumo estruturado preparado: {summary['deliveries']['total']} entregas, "
-                f"{summary['evolution']['generations']} geracoes"
-            )
-            print(f"Report salvo em: {report_path}")
+
+        summary = build_solution_summary(
+            scenario, evaluation, scenario_name, history
+        )
+        report_path = PROJECT_ROOT / "results" / f"vrp_report_{scenario_name}.json"
+        save_solution_summary(summary, str(report_path))
+        print(
+            f"Resumo estruturado preparado: {summary['deliveries']['total']} entregas, "
+            f"{summary['evolution']['generations']} geracoes"
+        )
+        print(f"Report salvo em: {report_path}")
 
     pygame.quit()
 
